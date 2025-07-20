@@ -8,13 +8,13 @@ for book in books_by_orwell:
     print(book.title)
 
 # List all books in a library
-library = Library.objects.get(name="Central Library")
+library_name = "Central Library"
+library = Library.objects.get(name=library_name)
 books_in_library = library.books.all()
-print(f"\nBooks in {library.name}:")
+print(f"\nBooks in {library_name}:")
 for book in books_in_library:
     print(book.title)
 
 # Retrieve the librarian for a library
-library = Library.objects.get(name="Central Library")
 librarian = Librarian.objects.get(library=library)
-print(f"\nLibrarian for {library.name}: {librarian.name}")
+print(f"\nLibrarian for {library_name}: {librarian.name}")
