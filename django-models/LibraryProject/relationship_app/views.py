@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import permission_required
+
 # relationship_app/views.py
 from django.shortcuts import render
 from .models import Book
