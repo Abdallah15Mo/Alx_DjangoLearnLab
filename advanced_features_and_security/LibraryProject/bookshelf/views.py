@@ -55,3 +55,5 @@ def secure_view(request):
 
 # SECURITY: Prevent browser-based XSS attacks
 SECURE_BROWSER_XSS_FILTER = True
+
+from .forms import ExampleForm
