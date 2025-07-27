@@ -31,3 +31,27 @@ def book_delete(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
     book.delete()
     # Redirect
+
+
+# ✅ GOOD: Django ORM escapes input
+from django.db.models import Q
+
+
+def book_search(request):
+    query = request.GET.get("q", "")
+    books = Book.objects.filter(Q(title__icontains=query) | Q(author__icontains=query))
+    return render(request, "bookshelf/book_list.html", {"books": books})
+
+
+# views.py
+from django.http import HttpResponse
+
+
+def secure_view(request):
+    response = HttpResponse("Secure content")
+    response["Content-Security-Policy"] = "default-src 'self'"
+    return response
+
+
+# SECURITY: Prevent browser-based XSS attacks
+SECURE_BROWSER_XSS_FILTER = True

@@ -135,4 +135,29 @@ STATICFILES_DIRS = [
 
 # LibraryProject/settings.py
 AUTH_USER_MODEL = "users.CustomUser"
-AUTH_USER_MODEL = "bookshelf.CustomUser"  # ✅ must match the app and model name
+AUTH_USER_MODEL = "bookshelf.CustomUser"  # must match the app and model name
+
+
+# LibraryProject/settings.py
+
+DEBUG = False  #  Set to False in production
+
+#  Add Browser-Side Security Headers
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = "DENY"
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+#  Ensure cookies are sent over HTTPS only
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+#  Recommended for HSTS (HTTP Strict Transport Security)
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Optional: Allowed Hosts
+ALLOWED_HOSTS = ["yourdomain.com", "127.0.0.1"]
+
+# SECURITY: Prevent browser-based XSS attacks
+SECURE_BROWSER_XSS_FILTER = True
