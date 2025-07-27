@@ -54,3 +54,6 @@ class Book(models.Model):
     borrowed_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True
     )
+
+
+AUTH_USER_MODEL = "users.CustomUser"
