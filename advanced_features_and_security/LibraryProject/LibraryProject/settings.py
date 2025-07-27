@@ -131,3 +131,6 @@ import os
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+# LibraryProject/settings.py
+AUTH_USER_MODEL = "users.CustomUser"
