@@ -135,3 +135,4 @@ STATICFILES_DIRS = [
 
 # LibraryProject/settings.py
 AUTH_USER_MODEL = "users.CustomUser"
+AUTH_USER_MODEL = "bookshelf.CustomUser"  # ✅ must match the app and model name
