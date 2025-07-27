@@ -187,7 +187,7 @@ SECURE_BROWSER_XSS_FILTER = True
 DEBUG = False
 
 # Add your domain
-ALLOWED_HOSTS = ["yourdomain.com", "www.yourdomain.com"]
+ALLOWED_HOSTS = ["mystore.com", "www.mystore.com"]
 
 # Secure cookies
 CSRF_COOKIE_SECURE = True
@@ -203,3 +203,6 @@ SECURE_HSTS_PRELOAD = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = "DENY"
+
+# Trust the X-Forwarded-Proto header set by your reverse proxy (e.g., Nginx)
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
