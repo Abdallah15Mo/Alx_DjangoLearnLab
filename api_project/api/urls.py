@@ -1,14 +1,15 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken.views import obtain_auth_token
 from .views import BookList, BookViewSet
 
-# DRF Router for CRUD operations
 router = DefaultRouter()
 router.register(r"books_all", BookViewSet, basename="book_all")
 
 urlpatterns = [
-    # Read-only list view
     path("books/", BookList.as_view(), name="book-list"),
-    # Include router-generated routes
+    path(
+        "auth/token/", obtain_auth_token, name="api_token_auth"
+    ),  # 👈 Token retrieval endpoint
     path("", include(router.urls)),
 ]
