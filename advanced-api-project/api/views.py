@@ -1,8 +1,4 @@
-from rest_framework.permissions import (
-    IsAuthenticatedOrReadOnly,
-    IsAuthenticated,
-    IsAdminUser,
-)
+from rest_framework.permissions import ( IsAuthenticatedOrReadOnly,IsAuthenticated,IsAdminUser,)
 from django.shortcuts import render
 from rest_framework import generics, permissions
 from .models import Book
