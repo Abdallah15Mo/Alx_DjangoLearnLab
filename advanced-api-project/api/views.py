@@ -1,22 +1,45 @@
 from django.shortcuts import render
 from rest_framework import generics, permissions
-from rest_framework.permissions import IsAdminUser  # 👈 Add this here
+from rest_framework.permissions import IsAdminUser
 from .models import Book
 from .serializers import BookSerializer
 
 
+class BookListView(generics.ListAPIView):
+    """GET: List all books."""
+
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class BookDetailView(generics.RetrieveAPIView):
+    """GET: Retrieve one book."""
+
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.AllowAny]
+
+
 class BookCreateView(generics.CreateAPIView):
-    """
-    POST: Create a new book instance.
-    Automatically assigns the logged-in user as creator.
-    """
+    """POST: Create a book."""
 
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    def perform_create(self, serializer):
-        # This is where you customize save logic
-        serializer.save(created_by=self.request.user)
+
+class BookUpdateView(generics.UpdateAPIView):
+    """PUT/PATCH: Update a book."""
+
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
+class BookDeleteView(generics.DestroyAPIView):
+    """DELETE: Delete a book (admins only)."""
+
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [permissions.IsAdminUser]
