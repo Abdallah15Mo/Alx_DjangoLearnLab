@@ -149,6 +149,11 @@ from django.urls import path
 from .views import SearchResultsView, TaggedPostListView
 
 urlpatterns += [
-    path('search/', SearchResultsView.as_view(), name='search-results'),
-    path('tags/<str:tag>/', TaggedPostListView.as_view(), name='posts-by-tag'),
+    path("search/", SearchResultsView.as_view(), name="search-results"),
+    path("tags/<str:tag>/", TaggedPostListView.as_view(), name="posts-by-tag"),
 ]
+
+
+from .views import PostByTagListView
+
+path("tags/<slug:tag_slug>/", PostByTagListView.as_view(), name="posts-by-tag"),
