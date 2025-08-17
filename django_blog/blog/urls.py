@@ -96,3 +96,8 @@ urlpatterns = [
         name="logout",
     ),
 ]
+
+# Comment URLs
+path("post/<int:post_id>/comments/new/", views.add_comment, name="add-comment"),
+path("comments/<int:pk>/edit/", views.edit_comment, name="edit-comment"),
+path("comments/<int:pk>/delete/", views.delete_comment, name="delete-comment"),

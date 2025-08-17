@@ -85,3 +85,59 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Post, Comment
+from .forms import CommentForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+
+
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.save()
+            messages.success(request, "Comment added successfully.")
+            return redirect("post-detail", pk=post.id)
+    else:
+        form = CommentForm()
+    return render(request, "blog/comment_form.html", {"form": form, "post": post})
+
+
+@login_required
+def edit_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if comment.author != request.user:
+        messages.error(request, "Permission denied.")
+        return redirect("post-detail", pk=comment.post.id)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Comment updated.")
+            return redirect("post-detail", pk=comment.post.id)
+    else:
+        form = CommentForm(instance=comment)
+    return render(request, "blog/comment_form.html", {"form": form})
+
+
+@login_required
+def delete_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if comment.author != request.user:
+        messages.error(request, "Permission denied.")
+        return redirect("post-detail", pk=comment.post.id)
+
+    if request.method == "POST":
+        comment.delete()
+        messages.success(request, "Comment deleted.")
+        return redirect("post-detail", pk=comment.post.id)
+    return render(request, "blog/comment_confirm_delete.html", {"comment": comment})

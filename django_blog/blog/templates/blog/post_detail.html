@@ -8,4 +8,36 @@
 <a href="{% url 'post-delete' object.pk %}">Delete</a>
 {% endif %}
 <a href="{% url 'post-list' %}">Back to Posts</a>
+{% endblock %} {% extends "blog/base.html" %} {% block content %}
+<h2>{{ object.title }}</h2>
+<p>{{ object.content }}</p>
+<small>By {{ object.author }} on {{ object.published_date }}</small>
+
+<hr />
+
+<h3>Comments</h3>
+{% for comment in object.comments.all %}
+<div style="margin-bottom: 10px">
+  <p>{{ comment.content }}</p>
+  <small>By {{ comment.author }} on {{ comment.created_at }}</small>
+  {% if comment.author == user %}
+  <div>
+    <a href="{% url 'edit-comment' comment.pk %}">Edit</a> |
+    <a href="{% url 'delete-comment' comment.pk %}">Delete</a>
+  </div>
+  {% endif %}
+</div>
+{% empty %}
+<p>No comments yet.</p>
+{% endfor %} {% if user.is_authenticated %}
+<h4>Add a comment:</h4>
+<form method="POST" action="{% url 'add-comment' object.pk %}">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit">Post Comment</button>
+</form>
+{% else %}
+<p><a href="{% url 'login' %}">Log in</a> to comment.</p>
+{% endif %}
+
+<a href="{% url 'post-list' %}">Back to posts</a>
 {% endblock %}
