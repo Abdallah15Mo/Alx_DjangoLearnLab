@@ -101,3 +101,23 @@ urlpatterns = [
 path("post/<int:post_id>/comments/new/", views.add_comment, name="add-comment"),
 path("comments/<int:pk>/edit/", views.edit_comment, name="edit-comment"),
 path("comments/<int:pk>/delete/", views.delete_comment, name="delete-comment"),
+
+
+from .views import (
+    # other views...
+    CommentCreateView,
+    CommentUpdateView,
+    CommentDeleteView,
+)
+
+urlpatterns += [
+    path(
+        "post/<int:post_id>/comments/new/",
+        CommentCreateView.as_view(),
+        name="add-comment",
+    ),
+    path("comments/<int:pk>/edit/", CommentUpdateView.as_view(), name="edit-comment"),
+    path(
+        "comments/<int:pk>/delete/", CommentDeleteView.as_view(), name="delete-comment"
+    ),
+]
