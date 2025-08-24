@@ -9,3 +9,11 @@ router.register(r"comments", CommentViewSet, basename="comment")
 urlpatterns = [
     path("", include(router.urls)),
 ]
+
+
+from django.urls import path, include
+from .views import user_feed
+
+urlpatterns += [
+    path("feed/", user_feed, name="user-feed"),
+]
